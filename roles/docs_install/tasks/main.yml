@@ -1,0 +1,11 @@
+---
+- name: Copy T-FLEX installer
+  win_copy:
+    src: T-FLEX_DOCS_Server_17.exe
+    dest: C:\\Temp\\T-FLEX_DOCS_Server_17.exe
+
+- name: Install T-FLEX DOCs
+  win_package:
+    path: C:\\Temp\\T-FLEX_DOCS_Server_17.exe
+    arguments: /S
+    state: present

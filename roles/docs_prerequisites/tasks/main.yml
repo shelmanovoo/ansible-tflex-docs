@@ -1,0 +1,10 @@
+---
+- name: Install IIS
+  win_feature:
+    name: Web-Server
+    state: present
+
+- name: Install .NET Framework
+  win_chocolatey:
+    name: dotnet-4.8
+    state: present

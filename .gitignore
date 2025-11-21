@@ -1,0 +1,18 @@
+# Ansible
+*.retry
+*.swp
+
+# Windows
+Thumbs.db
+
+# Sensitive data
+*.key
+*.pem
+vault.yml
+
+# Installers
+*.exe
+*.msi
+
+# Logs
+*.log

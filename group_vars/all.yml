@@ -1,0 +1,5 @@
+---
+tflex_version: "17"
+tflex_instance_name: "SERVERS"
+tflex_db_server: "localhost"
+tflex_db_name: "TflexDOCsSERVERS"

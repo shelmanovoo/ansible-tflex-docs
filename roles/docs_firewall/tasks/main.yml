@@ -1,0 +1,9 @@
+---
+- name: Open firewall port for app server
+  win_firewall_rule:
+    name: "T-FLEX DOCs App Server"
+    localport: 21333
+    action: allow
+    direction: in
+    protocol: tcp
+    state: present

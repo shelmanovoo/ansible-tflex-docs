@@ -1,0 +1,14 @@
+---
+- name: Install T-FLEX DOCs Server
+  hosts: windows_servers
+  gather_facts: false
+  
+  roles:
+    - docs_prerequisites
+    - docs_install
+    - docs_firewall
+
+  tasks:
+    - name: Display completion message
+      debug:
+        msg: "T-FLEX DOCs installation completed!"
