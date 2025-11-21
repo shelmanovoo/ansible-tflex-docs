@@ -1,0 +1,12 @@
+---
+- name: Install T-FLEX DOCs Prerequisites
+  hosts: windows_servers
+  gather_facts: false
+  
+  roles:
+    - docs_prerequisites
+
+  tasks:
+    - name: Display prerequisites completion
+      debug:
+        msg: "T-FLEX DOCs prerequisites installation completed!"
