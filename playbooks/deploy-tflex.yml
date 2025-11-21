@@ -1,0 +1,64 @@
+---
+- name: Deploy T-FLEX DOCs Server
+  hosts: windows_servers
+  gather_facts: false
+  
+  tasks:
+    - name: Create installation directory
+      win_file:
+        path: C:\Temp
+        state: directory
+      when: not tflex_installed.stat.exists
+
+    - name: Copy T-FLEX installer (simulated)
+      debug:
+        msg: "Would copy T-FLEX_DOCS_Server_17.exe to target server"
+      when: not tflex_installed.stat.exists
+
+    - name: Install IIS features
+      win_feature:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - Web-Server
+        - Web-WebServer
+        - Web-Common-Http
+      when: not tflex_installed.stat.exists
+
+    - name: Install .NET Framework 4.8
+      win_chocolatey:
+        name: dotnet-4.8
+        state: present
+      when: not tflex_installed.stat.exists
+
+    - name: Create T-FLEX service account
+      win_user:
+        name: TFDocsService
+        password: "{{ tflex_db_password }}"
+        groups:
+          - Administrators
+        state: present
+      when: not tflex_installed.stat.exists
+
+    - name: Open firewall ports
+      win_firewall_rule:
+        name: "T-FLEX DOCs App Server"
+        localport: "{{ tflex_services.app_server.port }}"
+        action: allow
+        direction: in
+        protocol: tcp
+        state: present
+        enabled: yes
+
+    - name: Display completion message
+      debug:
+        msg: |
+          T-FLEX DOCs Server deployment ready!
+          
+          Next steps:
+          1. Manually install T-FLEX_DOCS_Server_17.exe on target server
+          2. Configure database connection
+          3. Start T-FLEX DOCs services
+          
+          Instance: {{ tflex_instance_name }}
+          Database: {{ tflex_db_name }}
